@@ -10,7 +10,7 @@ export {
    * @returns {function} - When executed will return value passed into the wrapped function
    */
   default as always,
-} from "./always";
+} from "./always.js";
 
 export {
   /**
@@ -21,7 +21,7 @@ export {
    * @returns {any}
    */
   default as alt,
-} from "./alt";
+} from "./alt.js";
 
 export {
   /**
@@ -31,7 +31,7 @@ export {
    * @returns {boolean}
    */
   default as and,
-} from "./and";
+} from "./and.js";
 
 export {
   /**
@@ -41,7 +41,7 @@ export {
    * @returns {any}
    */
   default as clone,
-} from "./clone";
+} from "./clone.js";
 
 export {
   /**
@@ -51,7 +51,7 @@ export {
    * @returns {any}
    */
   default as compose,
-} from "./compose";
+} from "./compose.js";
 
 export {
   /**
@@ -61,7 +61,7 @@ export {
    * @returns {any}
    */
   default as asyncCompose,
-} from "./asyncCompose";
+} from "./asyncCompose.js";
 
 export {
   /**
@@ -72,7 +72,7 @@ export {
    * @returns {function}
    */
   default as curry,
-} from "./curry";
+} from "./curry.js";
 
 export {
   /**
@@ -81,7 +81,7 @@ export {
    * @returns {function}
    */
   default as identity,
-} from "./identity";
+} from "./identity.js";
 
 export {
   /**
@@ -93,7 +93,7 @@ export {
    * @returns {any}
    */
   default as join,
-} from "./join";
+} from "./join.js";
 
 export {
   /**
@@ -103,7 +103,7 @@ export {
    * @returns {array}
    */
   default as of,
-} from "./of";
+} from "./of.js";
 
 export {
   /**
@@ -113,7 +113,7 @@ export {
    * @returns {boolean}
    */
   default as or,
-} from "./or";
+} from "./or.js";
 
 export {
   /**
@@ -123,7 +123,7 @@ export {
    * @returns {any}
    */
   default as pipe,
-} from "./pipe";
+} from "./pipe.js";
 
 export {
   /**
@@ -133,7 +133,7 @@ export {
    * @returns {function}
    */
   default as seq,
-} from "./seq";
+} from "./seq.js";
 
 export {
   /**
@@ -143,7 +143,7 @@ export {
    * @returns {function}
    */
   default as tap,
-} from "./tap";
+} from "./tap.js";
 
 export {
   /**
@@ -153,4 +153,4 @@ export {
    * @returns {object} - Instance that can be used to accept functions using fmap to manipulate the original value without mutation
    */
   default as wrap,
-} from "./wrap";
+} from "./wrap.js";

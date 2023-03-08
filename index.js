@@ -1,3 +1,3 @@
-import * as Congruity from "./src";
+import * as Congruity from "./src/index.js";
 
 export { Congruity };

@@ -1,0 +1,37 @@
+{
+  "name": "congruity",
+  "version": "1.0.0",
+  "description": "Congruity, a replacement of Jenp, is a library to help developers build applications using functional development.",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "docs": "./node_modules/.bin/jsdoc -r src -d docs",
+    "build": "npm run test && npm run docs"
+  },
+  "jest": {
+    "setupFiles": [
+      "./__mocks__/client.js"
+    ],
+    "transform": {
+      "^.+\\.[t|j]sx?$": "babel-jest"
+    }
+  },
+  "keywords": [
+    "functional",
+    "immutable",
+    "functions",
+    "monad",
+    "reactive",
+    "functional development",
+    "jenp"
+  ],
+  "author": "Anthony Crawford",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/preset-env": "^7.20.2",
+    "babel-jest": "^29.5.0",
+    "jest": "^29.5.0",
+    "jsdoc": "^4.0.2",
+    "jsdom": "^21.1.0"
+  }
+}

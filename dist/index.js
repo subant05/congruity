@@ -1,5 +1,3 @@
-'use strict';
-
 function always(data){
     return function (){
         return data
@@ -742,4 +740,4 @@ var index = /*#__PURE__*/Object.freeze({
     reactive: index$1
 });
 
-exports.Congruity = index;
+export { index as Congruity };

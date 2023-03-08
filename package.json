@@ -1,6 +1,6 @@
 {
   "name": "congruity",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Congruity, a replacement of Jenp, is a library to help developers build applications using functional development.",
   "main": "index.js",
   "scripts": {
@@ -16,6 +16,14 @@
       "^.+\\.[t|j]sx?$": "babel-jest"
     }
   },
+  "bugs": {
+    "url": "https://github.com/subant05/congruity/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/subant05/congruity.git"
+  },
+  "homepage": "https://github.com/subant05/congruity#readme",
   "keywords": [
     "functional",
     "immutable",

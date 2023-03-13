@@ -1,4 +1,4 @@
-export default function alt(funcA, funcB) {
+export default function asyncAlt(funcA, funcB) {
   return async function (data) {
     try {
       return (await funcA(data)) || (await funcB(data));

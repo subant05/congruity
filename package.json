@@ -1,6 +1,6 @@
 {
   "name": "congruity",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Congruity, a replacement of Jenp, is a library to help developers build applications using functional development.",
   "main": "./dist/index.js",
   "type": "module",

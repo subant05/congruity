@@ -25,6 +25,17 @@ export {
 
 export {
   /**
+   *  @description This function will compare the results of 2 asynchronous functions and return the one that has a value that is neither null or undefined.
+   * @function
+   * @param {function} funcA - The first function that will be compared.
+   * @param {function} funcB - The second function that will be compared.
+   * @returns {any}
+   */
+  default as alt,
+} from "./asyncAlt.js";
+
+export {
+  /**
    *  @description This takes a number of values that can be of any type. It will check the values themselves or the results of the functions to determine if all conditions match.
    * @function
    * @param {...any} value - number of arguments that can be of any type.

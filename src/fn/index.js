@@ -31,7 +31,7 @@ export {
    * @param {function} funcB - The second function that will be compared.
    * @returns {any}
    */
-  default as alt,
+  default as asyncAlt,
 } from "./asyncAlt.js";
 
 export {

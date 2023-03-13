@@ -10,6 +10,16 @@ function alt (funcA,funcB){
     }
 }
 
+function asyncAlt(funcA, funcB) {
+  return async function (data) {
+    try {
+      return (await funcA(data)) || (await funcB(data));
+    } catch (e) {
+      console.log(`alt: Error ${funcA.name} & ${funcB.name} `);
+    }
+  };
+}
+
 function and(){
     return Array
         .from(arguments)
@@ -169,6 +179,7 @@ var index$4 = /*#__PURE__*/Object.freeze({
     alt: alt,
     always: always,
     and: and,
+    asyncAlt: asyncAlt,
     asyncCompose: asyncCompose,
     clone: clone,
     compose: compose,
@@ -184,188 +195,227 @@ var index$4 = /*#__PURE__*/Object.freeze({
 });
 
 class Maybe {
+  static just(value) {
+    return new Just(value);
+  }
 
-    static just(value){
-        return new Just(value)
-    }
+  static nothing() {
+    return new Nothing();
+  }
 
-    static nothing(){
-        return new Nothing()
-    }
+  static fromNullable(value) {
+    return value != null ? Maybe.just(value) : Maybe.nothing();
+  }
 
-    static fromNullable(value){
-        return  value != null ? Maybe.just(value) : Maybe.nothing()
-    }
-    
-    static of(value){
-        return Maybe.just(value)
-    }
-    
-    get just(){
-        return false;
-    }
+  static of(value) {
+    return Maybe.just(value);
+  }
 
-    get nothing(){
-        return false;
-    }
+  get just() {
+    return false;
+  }
+
+  get nothing() {
+    return false;
+  }
 }
 
-class Just extends Maybe{
-    
-    constructor(value){
-        super();
-        this._value = value;
-    }
+class Just extends Maybe {
+  constructor(value) {
+    super();
+    this._value = value;
+  }
 
-    get value(){
-        return this._value
-    }
+  get value() {
+    return this._value;
+  }
 
-    map(fn){
-       return Maybe.fromNullable(fn(this._value))
-    }
+  map(fn) {
+    return Maybe.fromNullable(fn(this._value));
+  }
 
-    filter(fn){
-        return Maybe.fromNullable(fn(this._value) ? this._value : null)
-    }
+  async asyncMap(fn) {
+    return await Maybe.fromNullable(await fn(this._value));
+  }
 
-    chain(fn){
-        return fn(this._value)
-    }
+  filter(fn) {
+    return Maybe.fromNullable(fn(this._value) ? this._value : null);
+  }
 
-    getOrElse(){
-        return this._value;
-    }
+  chain(fn) {
+    return fn(this._value);
+  }
 
-    toString() {
-        return `Just: ${this._value}`;
-    }
+  async asyncChain(fn) {
+    return await fn(this._value);
+  }
+
+  getOrElse() {
+    return this._value;
+  }
+
+  toString() {
+    return `Just: ${this._value}`;
+  }
 }
 
 class Nothing extends Maybe {
-    constructor(){
-        super();
-    }
-    map(){
-        return this;
-    }
+  constructor() {
+    super();
+  }
+  map() {
+    return this;
+  }
 
-    filter(){
-        return this;
-    }
+  filter() {
+    return this;
+  }
 
-    chain(){
-        return this;
-    }
+  chain() {
+    return this;
+  }
 
-    get(){
-        throw new Error("Can not get value of null or Undefined")
-    }
-    
-    getOrElse(other){
-        return other
-    }
+  async asyncChain() {
+    return this;
+  }
 
-    toString() {
-        return `Nothing: null`;
-    }
+  get value() {
+    throw new Error("Can not get value of null or Undefined");
+  }
+
+  getOrElse(other) {
+    return other;
+  }
+
+  async asyncGetOrElse(fn) {
+    return other;
+  }
+
+  toString() {
+    return `Nothing: null`;
+  }
 }
 
 class Either {
+  get value() {
+    return this._value;
+  }
 
-    get value(){
-        return this._value;
-    }
+  static right(value) {
+    return new Right(value);
+  }
 
-    static right(value){
-        return new Right(value);
-    }
+  static left(value) {
+    return new Left(value);
+  }
 
-    static left(value){
-        return new Left(value);
-    }
+  static fromNullable(value) {
+    return value !== null && typeof value !== "undefined"
+      ? Either.right(value)
+      : Either.left(value);
+  }
 
-    static fromNullable(value){
-       return  value !== null && typeof value !== "undefined" ? Either.right(value) : Either.left(value);
-    }
-
-    static of(value) {
-        return Either.right(value);
-    }
+  static of(value) {
+    return Either.right(value);
+  }
 }
 
 class Left extends Either {
-    constructor(value){
-        super();
-        this._value = value;
-    }
+  constructor(value) {
+    super();
+    this._value = value;
+  }
 
-    map() {
-        return this;
-    }
+  map() {
+    return this;
+  }
 
-    get value() {
-        throw new Error("Can not extract a left value");
-    }
+  async asyncMap() {
+    return this;
+  }
 
-    chain(){
-        return this;
-    }
+  get value() {
+    throw new Error("Can not extract a left value");
+  }
 
-    getOrElse(other){
-        return other;
-    }
+  chain() {
+    return this;
+  }
 
-    getOrElseThrow(other="Error"){
-        throw new Error(other);
-    }
+  async asyncChain() {
+    return this;
+  }
 
-    orElse(fn){
-        return fn(this._value);
-    }
-    
-    filter(){
-        return this;
-    }
+  getOrElse(other) {
+    return other;
+  }
 
-    toString(){
-        return `Left: ${this._value}`;
-    }
+  getOrElseThrow(other = "Error") {
+    throw new Error(other);
+  }
+
+  orElse(fn) {
+    return fn(this._value);
+  }
+
+  async asyncOrElse(fn) {
+    return await fn(this._value);
+  }
+
+  filter() {
+    return this;
+  }
+
+  toString() {
+    return `Left: ${this._value}`;
+  }
 }
 
 class Right extends Either {
-    constructor(value){
-        super();
-        this._value = value;
-    }
-    
-    map(fn){
-        return Either.fromNullable(fn(this._value));
-    }
+  constructor(value) {
+    super();
+    this._value = value;
+  }
 
-    getOrElse(){
-        return this._value;
-    }
-    
-    chain(fn) {
-        return fn(this._value);
-    }
+  map(fn) {
+    return Either.fromNullable(fn(this._value));
+  }
 
-    getOrElseThrow(){
-        return this._value;
-    }
+  async asyncMap(fn) {
+    return await Either.fromNullable(await fn(this._value));
+  }
 
-    orElse(){
-        return this;
-    }
+  getOrElse() {
+    return this._value;
+  }
 
-    filter(fn){
-        return Either.fromNullable(fn(this._value) ? this._value : null);
-    }
-    
-    toString(){
-        return `Right: ${this._value}`;
-    }
+  chain(fn) {
+    return fn(this._value);
+  }
+
+  async asyncChain(fn) {
+    return await fn(this._value);
+  }
+
+  getOrElseThrow() {
+    return this._value;
+  }
+
+  orElse() {
+    return this;
+  }
+
+  async asyncOrElse() {
+    return this;
+  }
+
+  filter(fn) {
+    return Either.fromNullable(fn(this._value) ? this._value : null);
+  }
+
+  toString() {
+    return `Right: ${this._value}`;
+  }
 }
 
 class IO {
@@ -740,4 +790,4 @@ var index = /*#__PURE__*/Object.freeze({
     reactive: index$1
 });
 
-export { index as Congruity };
+export { index as default };

@@ -11,7 +11,7 @@ export default class Either {
     return new Left(value);
   }
 
-  static async fromNullable(value) {
+  static fromNullable(value) {
     return value !== null && typeof value !== "undefined"
       ? Either.right(value)
       : Either.left(value);

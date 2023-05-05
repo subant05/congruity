@@ -3,7 +3,9 @@ export default function asyncAlt(funcA, funcB) {
     try {
       return (await funcA(data)) || (await funcB(data));
     } catch (e) {
-      console.log(`alt: Error ${funcA.name} & ${funcB.name} `);
+      console.log(`alt: Error ${funcA.name} || ${funcB.name} `);
+      console.log(e.message);
+      console.log(e.stack);
     }
   };
 }
